@@ -14,7 +14,7 @@ def ingredient_getter
 		ingredients_json = random_cocktail
 		ingredient_array = [ingredients_json["strIngredient1"], ingredients_json["strMeasure1"]]
 	end while ingredient_array[0].nil? || ingredient_array[1].nil?
-	ingredient_array.map { |ingredient| ingredient.strip }
+	ingredient_array.map { |ingredient| ingredient.strip.downcase }
 end
 
 def ingredient_builder(amount)
@@ -32,10 +32,12 @@ def cocktail_builder(cocktail_amount, ingredient_amount)
 	puts "🍹 Generating Twin Peaks inspired Cocktails 🍹 "
 
 	cocktail_amount.times do
-		flavour = Faker::Dessert.unique.flavor.split(" ")
-		location = Faker::TvShows::TwinPeaks.unique.location.split(" ")
-		beer = Faker::Beer.unique.style.split(" ")
-		name = "#{beer.first} #{flavour.first} #{location.first}"
+		flavour = Faker::Dessert.unique.flavor.split(" ").sample
+		begin 
+			location = Faker::TvShows::TwinPeaks.unique.location.split(" ").sample
+		end while location.match(/\w*'s\z/)
+		character = "#{Faker::TvShows::TwinPeaks.unique.character.split(" ").last.capitalize}'s"
+		name = "#{character} #{flavour} #{location}"
 		cocktail = Cocktail.create!({name: name})
 		cocktail_ingredients = ingredient_builder(ingredient_amount)
 		cocktail_ingredients.each do |ingredient, measure|

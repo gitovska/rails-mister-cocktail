@@ -1,0 +1,13 @@
+<div class="container">
+	<h1><%= @cocktail.name %></h1>
+	<div class="card">
+		<h2>Ingredients</h2>
+		<ol>
+			<% @cocktail.doses.each do |dose| %>
+				<li><%= "#{dose.description} #{dose.ingredient.name}" %></li>
+			<% end %>
+		</ol>
+		<%= link_to 'Edit', edit_cocktail_path(@cocktail) %>
+		<%= link_to 'Back', cocktails_path %>
+	</div>
+</div>

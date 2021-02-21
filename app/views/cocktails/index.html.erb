@@ -1,0 +1,21 @@
+<div class="container">
+	<h1 class="p-3">Cocktails</h1>
+	<ul class="list-unstyled">
+		<div class="row">
+			<% @cocktails.each do |cocktail| %>
+				<div class="col-sm-4 p-3">
+					<div class="card" style="width: 18rem;">
+						<div class="card-img-top">
+							<%= image_tag "cocktail_placeholder.jpg", alt: "cocktail", width: "100%" %>
+						</div>
+						<div class="card-body">
+							<li class="card-title">
+								<%= link_to cocktail.name, cocktail_path(cocktail) %>
+							</li>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	</ul>
+</div>
